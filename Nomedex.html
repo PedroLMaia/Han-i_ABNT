@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script>
+            function converter() {
+                const nome = document.forms["ABNT"]["nome"].value;
+                function divideONome(name) {
+                let spearedName = [];
+                spearedName = name.split(" ");
+
+                let finalString = "";
+                finalString = `${spearedName[spearedName.length - 1]}, ${spearedName[0]}`;
+
+                for (let i = 1; i < spearedName.length-1; i++) {
+                    const element = spearedName[i];
+        
+                finalString += ` ${element[0]}`;
+                }
+    
+                return finalString;
+                }
+                const final = divideONome(nome);
+                document.forms["ABNT"]["converte"].value = final;
+            }
+            </script>
+            <style>
+            div.absolute {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 400px;
+                height: 190px;
+                border: none;
+                background-color: lightgray;
+                padding-right: 0px;
+                text-align: center;
+                vertical-align: baseline;
+            }
+            </style>
+                </head>
+                <body>
+                <br>
+            <form name="ABNT">
+            <div class="absolute">
+                <h2>Conversor de nome para ABNT</h2>
+                <p> Nome completo: <input type="text" name="nome" style="text-align: center;"></p>
+                <p> Nome em ABNT: <input type= "text" name="converte" style="text-align: center;" readonly></p>
+                <p><input type="button" value="Converter" name="btconverter" onclick="converter()">
+            </div>
+        </form>
+    </body>
+</html>
+
+
+
+ 

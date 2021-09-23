@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+      <script>
+            function Discos() {
+                var n1 = document.forms["Torre de Hanói"]["n1"].value;
+                if (n1 == "") {
+                  alert("valor não preeenchido");
+                  return false;
+                }
+                document.forms["Torre de Hanói"]["n1"].value = n1;
+                var Discoss_de_aneis = n1;
+                var a = []; 
+                var b = [];
+                var c = [];
+                var Discos_total_de_movimentos = 0;
+                var output_html;
+                function inicialização() { 
+                  var diâmetro;
+                  for (diâmetro=Discoss_de_aneis; diâmetro > 0; diâmetro --){
+                    a.push(diâmetro);
+                  }
+                }
+                function situação(){
+                  var retval = "", next;
+                  retval = ""; next = ""; 
+                  if (a.length==0) { retval = retval + "vazio"; } 
+                  else for (i=0; i<a.length; i++){retval = ""}
+                  retval = retval + " "
+                  retval = retval + ""; next = ""; 
+                  if (b.length==0) { retval = retval + ""; } 
+                  else for (i=0; i<b.length; i++) { retval = retval + next + b[i]; next = ""; } 
+                  retval = retval + ""
+                  retval = retval + ""; next = ""; 
+                  if (c.length==0) { retval = retval + ""; } 
+                  else for (i=0; i<c.length; i++) { retval = retval + next + c[i]; next = ""; } 
+                  retval = retval + "</p>"
+                  return retval;
+                }
+                function jogada(src, index_src, dst){
+                  var val_src, len_src, len_dst, alt_dst, index_dst;
+                  if (src == 'A') { len_src = a.length - index_src; val_src = a[index_src]; }
+                  if (src == 'B') { len_src = b.length - index_src; val_src = b[index_src]; }
+                  if (src == 'C') { len_src = c.length - index_src; val_src = c[index_src]; }
+                  if (len_src == 1){ 
+                    if (dst == 'A') { a.push(val_src); }
+                    if (dst == 'B') { b.push(val_src); }
+                    if (dst == 'C') { c.push(val_src); }
+                    if (src == 'A') { a.pop(); }
+                    if (src == 'B') { b.pop(); }
+                    if (src == 'C') { c.pop(); }
+                    Discos_total_de_movimentos ++;
+                    output_html = output_html + "<p>Movimento: <b>" + src + "</b> → <b>" + dst + "</b>  <b>" +"(" + Discos_total_de_movimentos + ")" + "  </b></p>"
+                  }
+                  else{
+                    if (src == 'A') { if (dst == 'B') { alt_dst = 'C'; } else { alt_dst = 'B'; } }
+                    if (src == 'B') { if (dst == 'A') { alt_dst = 'C'; } else { alt_dst = 'A'; } }
+                    if (src == 'C') { if (dst == 'A') { alt_dst = 'B'; } else { alt_dst = 'A'; } }
+                    if (alt_dst == 'A') { index_dst = a.length; }
+                    if (alt_dst == 'B') { index_dst = b.length; }
+                    if (alt_dst == 'C') { index_dst = c.length; }
+                    jogada(src, index_src+1, alt_dst);
+                    jogada(src, index_src, dst);
+                    jogada(alt_dst, index_dst, dst);
+                  }
+                }
+                inicialização(); 
+                output_html = situação();
+                jogada('A', 0, 'C'); 
+                output_html = output_html;
+                output_html1 = '<h2>Torre resolvida em <span style="color:rgb(255, 0, 0)">' + Discos_total_de_movimentos + '</span> movimentos.</h2>';
+                document.getElementById("Discos").innerHTML = Discoss_de_aneis;
+                document.getElementById("solução").innerHTML = output_html;
+                document.getElementById("solução1").innerHTML = output_html1;
+              }
+              </script>
+              <style>
+              div.absolute {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 400px;
+                height: 150px;
+                border: none;
+                background-color: lightgray;
+                padding-right: 0px;
+                text-align: center;
+                vertical-align: baseline;
+              }
+              </style>
+                </head>
+                  <body>
+                  <br>
+                    <form name="Torre de Hanói">
+                      <div class="absolute">
+                        <h1>Torre de Hanói</h1>
+                      <p>Discos:  
+                      <input type="text" name="n1" style="text-align: center;"></p>
+                      <p><input type="button" value="Enviar" name="btDiscos" onclick="Discos()">
+                      <h2>Torre de Hanói com <span id="Discos" style="color:rgb(255, 0, 0);">0</span> discos.</h2>
+                      <span id="solução1" style="color:rgb(0, 0, 0);"></span>
+                <div id="solução"></div>
+            </div>
+        </form>
+    </body>
+</html>
+
+
+
+
